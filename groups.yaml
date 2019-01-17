@@ -1,0 +1,97 @@
+  default_view:
+    name: Home
+    view: true
+    entities:
+      - persistent_notification.config_entry_discovery
+      - climate.my_ecobee3
+      - weather.my_ecobee3
+      - group.light
+      - group.family
+      - group.cameras
+      - sensor.mopar
+      - group.mopar
+      - sensor.speedtest_ping
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.cpu_temp
+      - sensor.last_backup
+      - alarm_control_panel.home
+      - sensor.yr_symbol
+      - sun.sun
+      - group.all_lights
+      - sensor.zak_home_24hr
+
+  chromecast:
+    name: Chromecast
+    view: true
+    icon: mdi:google-chrome
+    entities:
+      - media_player.bedroom_speaker
+      - media_player.bedroom_tv
+      - media_player.chelseas_tv
+      - media_player.kitchen_display
+      - media_player.man_cave_chromecast
+      - media_player.office_home
+      - media_player.zak_tv
+      - media_player.all_speakers
+  kitchen:
+    name: Kitchen
+    view: true
+    entities:
+      - media_player.kitchen_display
+      - light.kitchen_bar_1
+      - light.kitchen_sink
+      - light.14107027cc50e349556d
+  cameras:
+    name: Camera
+    view: false
+    control: hidden
+    icon: mdi:message-video
+    entities:
+      - camera.back_porch
+      - camera.front_door
+      - camera.garage
+  cameras_all:
+    name: Camera All
+    view: true
+    control: hidden
+    icon: mdi:message-video
+    entities:
+      - camera.back_porch
+      - camera.front_door
+      - camera.garage
+      - sensor.battery_level_front_door
+      - sensor.battery_level_garage
+      - sensor.battery_level_back_porch
+      - sensor.captured_today_front_door
+      - sensor.captured_today_garage
+      - sensor.captured_today_back_porch
+      - sensor.last_front_door
+      - sensor.last_garage
+      - sensor.last_back_porch
+      - sensor.signal_strength_front_door
+      - sensor.signal_strength_garage
+      - sensor.signal_strength_back_porch
+
+  mopar:
+    name: Car Stats
+    control: hidden
+    icon: mdi:car
+    entities:
+      - sensor.2016_chrysler_200c
+      - sensor.2016_dodge_charger
+  family:
+    name: Family
+    control: hidden
+    icon: mdi:account-group
+    entities:
+      - binary_sensor.amy
+      - binary_sensor.zak
+      - binary_sensor.camryn
+      - binary_sensor.chelsea
+  automations:
+    name: Automations
+    view: true
+    entities:
+      - automation.family_leave
+      - automation.family_home

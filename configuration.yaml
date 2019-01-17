@@ -1,0 +1,188 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret loc_lat
+  longitude: !secret loc_log
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 353
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Chicago
+  # Customization file
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  base_url: !secret http_base
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+logger:
+  default: info
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+  # ARLO Cameras
+  - platform: arlo
+    monitored_conditions:
+      - captured_today
+      - last_capture
+      - total_cameras
+      - battery_level
+      - signal_strength
+  # CPU Temp
+  - platform: command_line
+    name: CPU Temp
+    command: "python3 /home/homeassistant/.homeassistant/scripts/cpu_temp.py"
+  # Last Backup Date
+  - platform: command_line
+    name: Last Backup
+    command: "python3 /home/homeassistant/.homeassistant/scripts/last_backup.py"
+  # Mopar
+  - platform: mopar
+    username: !secret mopar_user
+    password: !secret mopar_pass
+    pin: 5355
+  # Speedtest
+  - platform: speedtest
+    hour:
+      - 0
+      - 12
+      - 18
+    monitored_conditions:
+      - ping
+      - download
+      - upload
+    server_id: 3187
+    # Statistics
+  - platform: history_stats
+    name: Zak Home 24hr
+    entity_id: binary_sensor.zak
+    state: 'on'
+    type: time
+    end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    duration:
+      hours: 24
+binary_sensor:
+  # Command_line
+  # Zak Presence (CPPM)
+  - platform: command_line
+    name: Zak
+    device_class: presence
+    payload_on: "On"
+    payload_off: "Off"
+    command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Zak.py"
+  # Amy Presence (CPPM)
+  - platform: command_line
+    name: Amy
+    device_class: presence
+    payload_on: "On"
+    payload_off: "Off"
+    command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Amy.py"
+  # Camryn Presence (CPPM)
+  - platform: command_line
+    name: Camryn
+    device_class: presence
+    payload_on: "On"
+    payload_off: "Off"
+    command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Camryn.py"
+  # Chelsea Presence (CPPM)
+  - platform: command_line
+    name: Chelsea
+    device_class: presence
+    payload_on: "On"
+    payload_off: "Off"
+    command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Chelsea.py"
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+# Thermostat
+ecobee:
+  api_key: !secret ecobee_api
+
+# Cameras (Arlo)
+arlo:
+  username: !secret arlo_user
+  password: !secret arlo_pass
+
+alarm_control_panel:
+  - platform: arlo
+    home_mode_name: "front and garage"
+    away_mode_name: "Armed"
+
+# Load ffmpeg
+ffmpeg:
+  ffmpeg_bin: /usr/bin/ffmpeg
+
+camera:
+  - platform: arlo
+    ffmpeg_arguments: '-pred 1 -q:v 2'
+
+# DuckDNS
+duckdns:
+  domain: !secret duck_domain
+  access_token: !secret duck_api
+
+# Lights
+# Phillips Hue
+hue:
+  bridges:
+    - host: 192.168.2.64
+      allow_unreachable: true
+      allow_hue_groups: false
+# Tuya / Geenie Lights
+tuya:
+  username: !secret tuya_user
+  password: !secret tuya_pass
+  country_code: 1
+
+# Shell Commands
+shell_command:
+  backupha: '/bin/bash /home/homeassistant/.homeassistant/scripts/shell_backup.sh'
+
+#device_tracker: !include device_tracker.yaml
+zone: !include zones.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

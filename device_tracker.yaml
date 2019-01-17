@@ -1,0 +1,25 @@
+# Device Tracker
+# Office Speaker
+  - platform: googlehome
+    host: 192.168.2.61
+    rssi_threshold: -100
+    interval_seconds: 8
+    consider_home: 20
+    new_device_defaults:
+      track_new_devices: false
+# Bedroom Speaker 
+  - platform: googlehome
+    host: 192.168.2.74
+    rssi_threshold: -100
+    interval_seconds: 8
+    consider_home: 20
+    new_device_defaults:
+      track_new_devices: false
+# Kitchen Display   
+  - platform: googlehome
+    host: 192.168.2.63
+    rssi_threshold: -100
+    interval_seconds: 8
+    consider_home: 20
+    new_device_defaults:
+      track_new_devices: false

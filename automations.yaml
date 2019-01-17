@@ -1,0 +1,73 @@
+# Leaving Home - Turn Everything Off #
+- alias: Family Leave
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: 'on'
+    to: 'off'
+    for:
+      minutes: 1
+  action:
+    - service: homeassistant.turn_off
+      entity_id:
+        - light.kitchen_sink
+- alias: Family Home
+  trigger:
+    platform: state
+    entity_id:
+      - binary_sensor.amy
+      - binary_sensor.zak
+      - binary_sensor.camryn
+      - binary_sensor.chelsea
+    from: 'off'
+    to: 'on'
+    for: '00:02:00'
+  action:
+    - service: tts.google_say
+      entity_id:
+        - media_player.kitchen_display
+        - media_player.office_home
+      # Borrowed from Carlo Costanzo https://github.com/CCOSTAN/Home-AssistantConfig#logo
+      data_template:
+        message:  >
+          {% set person = trigger.entity_id.split('.')[1]|replace('_', ' ')%}
+          {%- macro greeting_sentence(person) -%}
+          {{ [
+          "Welcome back home " ~ person,
+          "Guess who is home?" ~ person +" is!",
+          person + " is now in the house.",
+          "Welcome Home " ~ person + ".  We have missed you. Or at least I did.",
+          "Our home is now complete, Rest your head and relax your feet! Welcome Back " ~ person,
+          "Life is like a song, you’re back where you belong. Welcome home " ~ person,
+          "Hey there " ~ person + " Welcome Home!",
+          "Knock Knock. Who is There? "   ~ person +" is!",
+          "The garage door opener just told me that "   ~ person +" is home.",
+          person + " can not hide from the system. Welcome home.",
+          person ~ "! You are home!",
+          "I know a secret! "  ~ person +" is home!",
+          "Hey "  ~ person +". Your arrival has been recorded by the Smartest house on the block.",
+          "Take note! "  ~ person +" is home.",
+          "I am sensing a disturbance in the force. "  ~ person +" must be home!",
+          "And the house becomes a home. Welcome back " ~ person,
+          person + " is now here.  Hash tag Welcome Home.",
+          person + " is now here.  Hash tag Home.",
+          person + " is now here.  Hash tag Smart Home.",
+          "Just a quick announcement. " ~ person +" has arrived!",
+          "Pardon the interruption but " ~ person +" is home!",
+          "My systems are picking up the presence of additional humans. " ~ person +" has been identified as home."
+          ] | random }}
+          {%- endmacro -%}
+          {{greeting_sentence(person)}}
+        cache: false
+- alias: Backup HA
+  trigger:
+    platform: time
+    at: '22:00:00'
+  action:
+    - service: shell_command.backupha
+    - service: tts.google_say
+      entity_id: media_player.office_home
+      data:
+        message: "Home Assistant backup has started!"
+        cache: false
+        

@@ -1,0 +1,11 @@
+sensor.2015_dodge_charger:
+  hidden: true
+sensor.cpu_temp:
+  icon: mdi:temperature-fahrenheit
+group.all_lights:
+  hidden: false
+  name: All Lights
+group.mopar:
+  control: hidden
+group.family:
+  control: hidden
