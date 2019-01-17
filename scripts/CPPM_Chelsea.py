@@ -10,7 +10,7 @@ try:
 except Exception as e:
     print(e)
 
-with open("../secrets.yaml") as secretFile:
+with open("/home/homeassistant/.homeassistant/secrets.yaml") as secretFile:
   line = secretFile.readline()
   while line:
     if line.find("cppm_token") != -1:

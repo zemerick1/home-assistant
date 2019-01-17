@@ -70,10 +70,12 @@ sensor:
   - platform: command_line
     name: CPU Temp
     command: "python3 /home/homeassistant/.homeassistant/scripts/cpu_temp.py"
+    scan_interval: 3600
   # Last Backup Date
   - platform: command_line
     name: Last Backup
     command: "python3 /home/homeassistant/.homeassistant/scripts/last_backup.py"
+    scan_interval: 86400
   # Mopar
   - platform: mopar
     username: !secret mopar_user
