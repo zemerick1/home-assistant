@@ -1,0 +1,5 @@
+  - name: Home
+    latitude: !secret loc.lat
+    longitude: !secret loc_log
+    radius: 100
+    icon: mdi:account-multiple

@@ -18,4 +18,3 @@ secrets.yaml
 known_devices.yaml
 mopar_cookies.pickle
 *.py
-zones.yaml
