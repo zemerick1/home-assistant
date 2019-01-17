@@ -17,4 +17,3 @@ ip_bans.yaml
 secrets.yaml
 known_devices.yaml
 mopar_cookies.pickle
-*.py
