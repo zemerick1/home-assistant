@@ -78,7 +78,7 @@ sensor:
   - platform: mopar
     username: !secret mopar_user
     password: !secret mopar_pass
-    pin: 5355
+    pin: !secret mopar_pin
   # Speedtest
   - platform: speedtest
     hour:
