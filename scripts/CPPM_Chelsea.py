@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+'''
+This utilizes Clearpass NAC from Aruba to identify if a client is online by MAC address.
+It queries the Insight database for offline/online status via RADIUS accounting messages.
+I then use a binary_sensor command line to pull this data for presence detection.
+'''
 try:
     import requests
     import json
