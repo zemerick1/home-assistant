@@ -10,7 +10,7 @@
   action:
     - service: homeassistant.turn_off
       entity_id:
-        - light.kitchen_sink
+        - group.all_lights
 - alias: Family Home
   trigger:
     platform: state
@@ -59,6 +59,8 @@
           {%- endmacro -%}
           {{greeting_sentence(person)}}
         cache: false
+
+# Home Assistant Backup
 - alias: Backup HA
   trigger:
     platform: time
@@ -70,4 +72,16 @@
       data:
         message: "Home Assistant backup has started!"
         cache: false
-        
+
+# Set Log level dynamically 
+#
+- alias: Log Level
+  trigger:
+    platform: state
+    entity_id:
+      - input_select.log_level
+#        - input_select.log_component
+  action:
+    - service: logger.set_level
+      data_template:
+        homeassistant.components: "{{ states.input_select.log_level.state }}"

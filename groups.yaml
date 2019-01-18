@@ -20,6 +20,7 @@
       - sun.sun
       - group.all_lights
       - sensor.zak_home_24hr
+      - input_select.log_level
 
   chromecast:
     name: Chromecast
