@@ -9,6 +9,7 @@
 !*.py
 !*.sh
 !scripts/
+!custom_components/device_tracker/
 
 # Ignore folders.
 .storage
@@ -16,6 +17,7 @@
 .google.token
 tts
 test
+__pycache__
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 ip_bans.yaml

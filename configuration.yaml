@@ -47,7 +47,7 @@ history:
 # View all events in a logbook
 logbook:
 logger:
-  default: info
+  default: debug
 # Enables a map showing the location of tracked devices
 map:
 
@@ -144,9 +144,9 @@ ecobee:
   api_key: !secret ecobee_api
 
 # Cameras (Arlo)
-arlo:
-  username: !secret arlo_user
-  password: !secret arlo_pass
+#arlo:
+#  username: !secret arlo_user
+#  password: !secret arlo_pass
 
 #### Removed until resolved by pyArlo team ####
 #alarm_control_panel:
@@ -197,6 +197,15 @@ input_select:
       - debug
       - notset
     initial: warn
+##### TEST #####
+device_tracker:
+  - platform: cppm_tracker
+    host: !secret cppm_url
+    password: !secret cppm_token
+    scan_interval: 120
+    track_new_devices: true
+
+################
 #device_tracker: !include device_tracker.yaml
 zone: !include zones.yaml
 group: !include groups.yaml

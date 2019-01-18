@@ -20,7 +20,7 @@
       - sun.sun
       - group.all_lights
       - sensor.zak_home_24hr
-      - input_select.log_level
+      - device_tracker.b8d7af23e980
 
   chromecast:
     name: Chromecast
@@ -87,7 +87,7 @@
     icon: mdi:account-group
     entities:
       - binary_sensor.amy
-      - binary_sensor.zak
+      - device_tracker.b8d7af23e980
       - binary_sensor.camryn
       - binary_sensor.chelsea
   automations:
@@ -96,3 +96,8 @@
     entities:
       - automation.family_leave
       - automation.family_home
+  debug:
+    name: Debug
+    view: true
+    entities:
+      - input_select.log_level
