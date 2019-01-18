@@ -144,9 +144,9 @@ ecobee:
   api_key: !secret ecobee_api
 
 # Cameras (Arlo)
-#arlo:
-#  username: !secret arlo_user
-#  password: !secret arlo_pass
+arlo:
+  username: !secret arlo_user
+  password: !secret arlo_pass
 
 #### Removed until resolved by pyArlo team ####
 #alarm_control_panel:
