@@ -15,10 +15,10 @@
   trigger:
     platform: state
     entity_id:
-      - binary_sensor.amy
-      - binary_sensor.zak
-      - binary_sensor.camryn
-      - binary_sensor.chelsea
+      - device_tracker.1098c306d3ba
+      - device_tracker.b8d7af23e980
+      - device_tracker.c8d083067285
+      - device_tracker.90b0ed0989ec
     from: 'off'
     to: 'on'
     for: '00:02:00'

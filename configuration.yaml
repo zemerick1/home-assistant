@@ -47,7 +47,7 @@ history:
 # View all events in a logbook
 logbook:
 logger:
-  default: debug
+  default: info
 # Enables a map showing the location of tracked devices
 map:
 
@@ -197,7 +197,7 @@ input_select:
       - debug
       - notset
     initial: warn
-##### TEST #####
+# Device Tracker (Custom platform) 
 device_tracker:
   - platform: cppm_tracker
     host: !secret cppm_url
