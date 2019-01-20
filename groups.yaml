@@ -85,10 +85,10 @@
     control: hidden
     icon: mdi:account-group
     entities:
-      - device_tracker.1098c306d3ba
-      - device_tracker.b8d7af23e980
-      - device_tracker.c8d083067285
-      - device_tracker.90b0ed0989ec
+      - device_tracker.Amy
+      - device_tracker.Zak
+      - device_tracker.Camryn
+      - device_tracker.Chelsea
   automations:
     name: Automations
     view: true

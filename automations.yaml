@@ -15,12 +15,12 @@
   trigger:
     platform: state
     entity_id:
-      - device_tracker.1098c306d3ba
-      - device_tracker.b8d7af23e980
-      - device_tracker.c8d083067285
-      - device_tracker.90b0ed0989ec
-    from: 'off'
-    to: 'on'
+      - device_tracker.Amy
+      - device_tracker.Zak
+      - device_tracker.Camryn
+      - device_tracker.Chelsea
+    from: 'not_home'
+    to: 'home'
     for: '00:02:00'
   action:
     - service: tts.google_say

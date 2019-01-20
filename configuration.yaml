@@ -104,33 +104,33 @@ sensor:
 binary_sensor:
   # Command_line
   # Zak Presence (CPPM)
-  - platform: command_line
-    name: Zak
-    device_class: presence
-    payload_on: "On"
-    payload_off: "Off"
-    command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Zak.py"
+  #- platform: command_line
+  #  name: Zak
+  #  device_class: presence
+  #  payload_on: "On"
+  #  payload_off: "Off"
+  #  command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Zak.py"
   # Amy Presence (CPPM)
-  - platform: command_line
-    name: Amy
-    device_class: presence
-    payload_on: "On"
-    payload_off: "Off"
-    command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Amy.py"
+  #- platform: command_line
+  #  name: Amy
+  #  device_class: presence
+  #  payload_on: "On"
+  #  payload_off: "Off"
+  #  command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Amy.py"
   # Camryn Presence (CPPM)
-  - platform: command_line
-    name: Camryn
-    device_class: presence
-    payload_on: "On"
-    payload_off: "Off"
-    command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Camryn.py"
+  #- platform: command_line
+  #  name: Camryn
+  #  device_class: presence
+  #  payload_on: "On"
+  #  payload_off: "Off"
+  #  command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Camryn.py"
   # Chelsea Presence (CPPM)
-  - platform: command_line
-    name: Chelsea
-    device_class: presence
-    payload_on: "On"
-    payload_off: "Off"
-    command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Chelsea.py"
+  #- platform: command_line
+  #  name: Chelsea
+  #  device_class: presence
+  #  payload_on: "On"
+  #  payload_off: "Off"
+  #  command: "python3 /home/homeassistant/.homeassistant/scripts/CPPM_Chelsea.py"
 
 # Text to speech
 tts:
