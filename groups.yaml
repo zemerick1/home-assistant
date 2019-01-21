@@ -20,6 +20,7 @@
       - sun.sun
       - group.all_lights
       - sensor.zak_home_24hr
+      - camera.tn_weather
 
   chromecast:
     name: Chromecast
@@ -60,6 +61,7 @@
       - camera.back_porch
       - camera.front_door
       - camera.garage
+      - camera.bedroom
       - sensor.battery_level_front_door
       - sensor.battery_level_garage
       - sensor.battery_level_back_porch

@@ -161,6 +161,15 @@ ffmpeg:
 camera:
   - platform: arlo
     ffmpeg_arguments: '-pred 1 -q:v 2'
+  - platform: generic
+    still_image_url: https://icons.wxug.com/data/weather-maps/radar/united-states/bowling-green-kentucky-region-current-radar.gif
+    name: TN Weather
+  - platform: mjpeg
+    still_image_url: !secret dlink_still
+    mjpeg_url: !secret dlink_live
+    name: Bedroom
+    username: !secret dlink_user
+    password: !secret dlink_pass
 
 # DuckDNS
 duckdns:
