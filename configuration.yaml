@@ -203,7 +203,10 @@ device_tracker:
     host: !secret cppm_url
     password: !secret cppm_token
     scan_interval: 120
-    track_new_devices: true
+    consider_home: 120
+    new_device_defaults:
+      track_new_devices: false
+      hide_if_away: false
 
 ################
 #device_tracker: !include device_tracker.yaml

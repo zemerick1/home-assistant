@@ -21,7 +21,7 @@
       - device_tracker.Chelsea
     from: 'not_home'
     to: 'home'
-    for: '00:02:00'
+    for: '00:01:00'
   action:
     - service: tts.google_say
       entity_id:

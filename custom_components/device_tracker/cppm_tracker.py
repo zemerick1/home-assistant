@@ -50,16 +50,20 @@ class CPPMDeviceScanner(DeviceScanner):
         self.success_init = self.get_cppm_data()
 
     async def async_scan_devices(self):
-
+        _LOGGER.debug("------ SCAN DEVICES CALLED. ------------")
         self.get_cppm_data()
-        _LOGGER.debug("------ SCAN DEVICES CALLED ------")
         return [device['mac'] for device in self.results]
 
     async def async_get_device_name(self, device):
         _LOGGER.debug("------ RESOLVING DEVICE NAME ----")
         return [device['name'] for device in self.results]
-        #filter_named = [device['name'] for device in self.results
-                       # if device['mac'] == mac]
+
+    async def async_get_extra_attributes(self, device):
+        """Return the IP of the given device."""
+        filter_ip = next((
+            result['ip'] for result in self.results
+            if result['mac'] == device), None)
+        return {'ip': filter_ip}
 
     @Throttle(SCAN_INTERVAL)
     def get_cppm_data(self):
