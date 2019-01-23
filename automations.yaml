@@ -11,6 +11,9 @@
     - service: homeassistant.turn_off
       entity_id:
         - group.all_lights
+        - switch.lr_fan_switch
+
+# Greet the family
 - alias: Family Home
   trigger:
     platform: state
@@ -19,6 +22,7 @@
       - device_tracker.Zak
       - device_tracker.Camryn
       - device_tracker.Chelsea
+      - device_tracker.Clayton
     from: 'not_home'
     to: 'home'
     for: '00:01:00'
@@ -85,3 +89,34 @@
     - service: logger.set_level
       data_template:
         homeassistant.components: "{{ states.input_select.log_level.state }}"
+
+# No activity turn off LR lights
+- alias: No Activity Kill LR
+  trigger:
+    platform: state
+    entity_id:
+    - sensor.living_room
+    from: active
+    to: inactive
+    for: 00:15:00
+  action:
+  - service: homeassistant.turn_off
+    entity_id:
+    - switch.lr_fan_switch
+    - light.lr_lamp_1
+    - light.lr_lamp_2
+
+# Turn on LR lights when there is activity
+- alias: Activity Turn on LR Lights
+  trigger:
+    platform: state
+    entity_id:
+    - sensor.living_room
+    from: inactive
+    to: active
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - switch.lr_fan_switch
+    - light.lr_lamp_1
+    - light.lr_lamp_2

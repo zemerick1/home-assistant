@@ -21,6 +21,15 @@
       - group.all_lights
       - sensor.zak_home_24hr
       - camera.tn_weather
+      - sensor.processor_use
+      - sensor.memory_use_percent
+      - switch.lr_fan_switch
+      - switch.raspberri_pi
+      - sensor.sliding_door_contact_battery
+      - sensor.sliding_door_contact_temperature
+      - sensor.sliding_door
+      - sensor.raspberri_pi_plug_usage
+      - sensor.living_room
 
   chromecast:
     name: Chromecast
@@ -43,6 +52,17 @@
       - light.kitchen_bar_1
       - light.kitchen_sink
       - light.14107027cc50e349556d
+      - switch.raspberri_pi
+  livingroom:
+    name: Living Room
+    view: true
+    entities:
+      - sensor.sliding_door_contact_battery
+      - sensor.sliding_door_contact_temperature
+      - sensor.sliding_door
+      - switch.lr_fan_switch
+      - light.lr_lamp_1
+      - light.lr_lamp_2
   cameras:
     name: Camera
     view: false
@@ -91,6 +111,7 @@
       - device_tracker.Zak
       - device_tracker.Camryn
       - device_tracker.Chelsea
+      - device_tracker.Clayton
   automations:
     name: Automations
     view: true

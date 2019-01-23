@@ -56,6 +56,18 @@ sun:
 
 # Sensors
 sensor:
+  # Motion
+  - platform: mqtt
+    name: "Living Room"
+    state_topic: "smartthings/Living Room/motion"
+    retain: true
+
+  # System Monitor  
+  - platform: systemmonitor
+    resources:
+      - type: processor_use
+      - type: memory_use_percent
+
   # Weather prediction
   - platform: yr
   # ARLO Cameras
@@ -71,6 +83,7 @@ sensor:
     name: CPU Temp
     command: "python3 /home/homeassistant/.homeassistant/scripts/cpu_temp.py"
     scan_interval: 3600
+    unit_of_measurement: '°F'
   # Last Backup Date
   - platform: command_line
     name: Last Backup
@@ -93,14 +106,26 @@ sensor:
       - upload
     server_id: 3187
     # Statistics
-  - platform: history_stats
-    name: Zak Home 24hr
-    entity_id: binary_sensor.zak
-    state: 'on'
-    type: time
-    end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
-    duration:
-      hours: 24
+  - platform: mqtt
+    name: "Sliding Door"
+    state_topic: "smartthings/Sliding Door/contact"
+    retain: true
+  - platform: mqtt
+    name: "Sliding Door Contact Temperature"
+    state_topic: "smartthings/Sliding Door/temperature"
+    unit_of_measurement: '°F'
+    retain: true
+  - platform: mqtt
+    name: "Sliding Door Contact Battery"
+    state_topic: "smartthings/Sliding Door/battery"
+    unit_of_measurement: "%"
+    retain: true
+  - platform: mqtt
+    name: "Raspberri Pi Plug Usage"
+    state_topic: "smartthings/Raspberry Pi/power"
+    unit_of_measurement: 'W'
+    retain: true
+   
 binary_sensor:
   # Command_line
   # Zak Presence (CPPM)
@@ -193,6 +218,25 @@ tuya:
 shell_command:
   backupha: '/bin/bash /home/homeassistant/.homeassistant/scripts/shell_backup.sh'
 
+# Switches
+switch:
+  - platform: mqtt
+    name: "Raspberri Pi"
+    state_topic: "smartthings/Raspberri Pi/switch"
+    command_topic: "smartthings/Raspberri Pi/switch"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "LR Fan Switch"
+    state_topic: "smartthings/LR Fan Switch/switch"
+    command_topic: "smartthings/LR Fan Switch/switch"
+    brightness_state_topic: "smartthings/LR Fan Switch/level"
+    brightness_command_topic: "smartthings/LR Fan Switch/level"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+
 input_select:
   log_level:
     name: Log Level
@@ -216,7 +260,16 @@ device_tracker:
     new_device_defaults:
       track_new_devices: false
       hide_if_away: false
-
+# MQTT Stuff
+mqtt:
+  broker: localhost
+  port: 1883
+  protocol: 3.1
+  keepalive: 60
+  client_id: smartthings
+  username: !secret mqtt_user
+  password: !secret mqtt_pass
+      
 ################
 #device_tracker: !include device_tracker.yaml
 zone: !include zones.yaml
