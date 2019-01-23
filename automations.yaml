@@ -120,3 +120,24 @@
     - switch.lr_fan_switch
     - light.lr_lamp_1
     - light.lr_lamp_2
+ 
+# Turn off Chromecast on school nights after 12:00
+- alias: Turn off Chromecast after time
+  trigger:
+    - platform: state
+      entity_id: media_player.kitchen_display
+      # Change the below line to 'playing' when in production.
+      to: 'off'
+  condition:
+    - condition: time
+      after: '21:00:00'
+      before: '06:00:00'
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    - service: media_player.turn_off
+      entity_id: media_player.kitchen_display
