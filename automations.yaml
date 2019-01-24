@@ -121,8 +121,13 @@
   - service: homeassistant.turn_off
     entity_id:
     - switch.lr_fan_switch
+  - service: light.lifx_set_state
+    entity_id:
     - light.lr_lamp_1
     - light.lr_lamp_2
+    data:
+      transition: 30
+      power: false
 
 # Turn on LR lights when there is activity @ Dark
 - alias: Activity Turn on LR Lights
@@ -143,8 +148,15 @@
   - service: homeassistant.turn_on
     entity_id:
     - switch.lr_fan_switch
+  - service: light.lifx_set_state
+    entity_id:  
     - light.lr_lamp_1
     - light.lr_lamp_2
+    data:
+      transition: 30
+      brightness_pct: 100
+      power: true
+        
  
 # Turn off Chromecast on school nights after @ midnight
 - alias: Turn off Chromecast after time
