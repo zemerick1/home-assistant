@@ -9,3 +9,7 @@ group.mopar:
   control: hidden
 group.family:
   control: hidden
+group.school_night:
+  control: hidden
+group.all_automations:
+  hidden: false

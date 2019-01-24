@@ -1,0 +1,19 @@
+  purge_keep_days: 10
+  purge_interval: 1
+  exclude:
+    domains:
+      - automation
+      - weblink
+      - updater
+    entities:
+      - sun.sun # Don't record sun data
+      - sensor.last_boot # Comes from 'systemmonitor' sensor platform
+      - sensor.date
+      - sensor.speedtest_ping
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.sliding_door_contact_battery
+      - sensor.sliding_door_contact_temperature
+      - sensor.raspberri_pi_plug_usage
+      - sensor.living_room_battery
+      - sensor.living_room_temperature

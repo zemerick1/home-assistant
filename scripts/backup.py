@@ -17,11 +17,13 @@ with ZipFile(backupFile, 'w') as zip_f:
     for file in files:
         # Skip Audio files. . we don't care.
         if file.endswith('.mp3'):
-          print('Skipping Google Audio file: {}'.format(file))
+            print('Skipping Google Audio file: {}'.format(file))
+        elif file.endswith('.db'):
+            print('Skipping DB file: {}'.format(file)) 
         else: 
-          # Add files to zip archive.
-          print('Adding file: {0} to {1}'.format(file, backupFile))
-          zip_f.write(file)
+            # Add files to zip archive.
+            print('Adding file: {0} to {1}'.format(file, backupFile))
+            zip_f.write(file)
 
 
 # SFTP stuff

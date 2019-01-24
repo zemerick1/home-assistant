@@ -3,15 +3,16 @@
   trigger:
     platform: state
     entity_id: group.family
-    from: 'on'
-    to: 'off'
+    from: 'home'
+    to: 'not_home'
     for:
-      minutes: 1
+      minutes: 10
   action:
     - service: homeassistant.turn_off
       entity_id:
         - group.all_lights
         - switch.lr_fan_switch
+        - group.chromecast
 
 # Greet the family
 - alias: Family Home
@@ -70,25 +71,42 @@
     platform: time
     at: '22:00:00'
   action:
-    - service: shell_command.backupha
     - service: tts.google_say
       entity_id: media_player.office_home
       data:
         message: "Home Assistant backup has started!"
         cache: false
+    - service: shell_command.backupha
 
+ # Home Assistant Backup - Notify when complete   
+- alias: Notify backup complete    
+  trigger:
+    platform: event
+    event_type: folder_watcher
+    event_data:
+      event_type: modified
+  action:
+    - service: persistent_notification.create
+      data:
+        message: "Backup has completed! {{ now() }}"
+        title: "Home Assistant Backup Alert" 
+    - service: tts.google_say
+      entity_id: media_player.office_home
+      data:
+        message: "Home Assistant backup has completed!"
+        cache: false        
 # Set Log level dynamically 
 #
-- alias: Log Level
+- alias: Set Log Level
   trigger:
     platform: state
     entity_id:
       - input_select.log_level
-#        - input_select.log_component
   action:
     - service: logger.set_level
       data_template:
         homeassistant.components: "{{ states.input_select.log_level.state }}"
+
 
 # No activity turn off LR lights
 - alias: No Activity Kill LR
@@ -106,7 +124,7 @@
     - light.lr_lamp_1
     - light.lr_lamp_2
 
-# Turn on LR lights when there is activity
+# Turn on LR lights when there is activity @ Dark
 - alias: Activity Turn on LR Lights
   trigger:
     platform: state
@@ -114,6 +132,13 @@
     - sensor.living_room
     from: inactive
     to: active
+  condition:
+    - condition: or
+      conditions:
+        - condition: sun
+          after: sunset
+        - condition: sun
+          before: sunrise    
   action:
   - service: homeassistant.turn_on
     entity_id:
@@ -121,23 +146,28 @@
     - light.lr_lamp_1
     - light.lr_lamp_2
  
-# Turn off Chromecast on school nights after 12:00
+# Turn off Chromecast on school nights after @ midnight
 - alias: Turn off Chromecast after time
   trigger:
     - platform: state
-      entity_id: media_player.kitchen_display
-      # Change the below line to 'playing' when in production.
-      to: 'off'
+      entity_id:
+        - media_player.chelseas_tv
+      to: 'playing'
   condition:
-    - condition: time
-      after: '21:00:00'
-      before: '06:00:00'
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
+    condition: and
+    conditions:
+      - condition: time
+        after: '11:59:00'
+        before: '06:00:00'
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+      - condition: state
+        entity_id: input_boolean.school_night
+        state: 'on'
   action:
     - service: media_player.turn_off
-      entity_id: media_player.kitchen_display
+      entity_id: media_player.chelseas_tv

@@ -30,6 +30,9 @@
       - sensor.sliding_door
       - sensor.raspberri_pi_plug_usage
       - sensor.living_room
+      - sensor.living_room_battery
+      - sensor.living_room_temperature
+      - group.school_night
 
   chromecast:
     name: Chromecast
@@ -72,16 +75,13 @@
       - camera.back_porch
       - camera.front_door
       - camera.garage
-  cameras_all:
-    name: Camera All
-    view: true
-    control: hidden
-    icon: mdi:message-video
-    entities:
-      - camera.back_porch
-      - camera.front_door
-      - camera.garage
       - camera.bedroom
+
+  security:
+    name: Security
+    view: true
+    entities:
+      - group.cameras
       - sensor.battery_level_front_door
       - sensor.battery_level_garage
       - sensor.battery_level_back_porch
@@ -94,7 +94,24 @@
       - sensor.signal_strength_front_door
       - sensor.signal_strength_garage
       - sensor.signal_strength_back_porch
-
+      - sensor.living_room
+      - sensor.sliding_door
+      - sensor.back_porch_motion
+      - sensor.front_door_motion
+      - sensor.garage_motion
+      - sensor.battery_level_front_door
+      - sensor.battery_level_garage
+      - sensor.battery_level_back_porch
+      - sensor.captured_today_front_door
+      - sensor.captured_today_garage
+      - sensor.captured_today_back_porch
+      - sensor.last_front_door
+      - sensor.last_garage
+      - sensor.last_back_porch
+      - sensor.signal_strength_front_door
+      - sensor.signal_strength_garage
+      - sensor.signal_strength_back_porch
+      
   mopar:
     name: Car Stats
     control: hidden
@@ -116,10 +133,14 @@
     name: Automations
     view: true
     entities:
-      - automation.family_leave
-      - automation.family_home
+      - group.all_automations
   debug:
     name: Debug
     view: true
     entities:
       - input_select.log_level
+  school_night:
+    name: School Night
+    view: false
+    entities:
+      - input_boolean.school_night

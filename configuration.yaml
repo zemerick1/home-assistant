@@ -12,7 +12,12 @@ homeassistant:
   time_zone: America/Chicago
   # Customization file
   customize: !include customize.yaml
+  # Whitelist External Dirs
+  whitelist_external_dirs:
+  - /home/homeassistant/.homeassistant
 
+# Recorder
+recorder: !include recorder.yaml
 # Show links to resources in log and frontend
 #introduction:
 
@@ -54,13 +59,70 @@ map:
 # Track the sun
 sun:
 
+# Folder Watcher
+folder_watcher:
+  - folder: /home/homeassistant/.homeassistant
+    patterns: 
+      - '*.last'
+
 # Sensors
 sensor:
-  # Motion
+# MQTT Sensors (Separated out because they are messy
+# Motion
   - platform: mqtt
     name: "Living Room"
     state_topic: "smartthings/Living Room/motion"
     retain: true
+  - platform: mqtt
+    name: "Bedroom Motion"
+    state_topic: "smartthings/Bedroom/motion"
+    retain: true
+  - platform: mqtt
+    name: "Front Door Motion"
+    state_topic: "smartthings/Front Door/motion"
+    retain: true
+  - platform: mqtt
+    name: "Garage Motion"
+    state_topic: "smartthings/garage/motion"
+    retain: true
+  - platform: mqtt
+    name: "Back Porch Motion"
+    state_topic: "smartthings/Back Porch/motion"
+    retain: true
+
+# Contact
+  - platform: mqtt
+    name: "Sliding Door"
+    state_topic: "smartthings/Sliding Door/contact"
+    retain: true
+    
+# Battery / MISC
+  - platform: mqtt
+    name: "Sliding Door Contact Temperature"
+    state_topic: "smartthings/Sliding Door/temperature"
+    unit_of_measurement: '°F'
+    retain: true
+  - platform: mqtt
+    name: "Sliding Door Contact Battery"
+    state_topic: "smartthings/Sliding Door/battery"
+    unit_of_measurement: "%"
+    retain: true
+  - platform: mqtt
+    name: "Living Room Battery"
+    state_topic: "smartthings/Living Room/battery"
+    unit_of_measurement: "%"
+    retain: true
+  - platform: mqtt
+    name: "Living Room Temperature"
+    state_topic: "smartthings/Living Room/temperature"
+    unit_of_measurement: '°F'
+    retain: true   
+  - platform: mqtt
+    name: "Raspberri Pi Plug Usage"
+    state_topic: "smartthings/Raspberry Pi/power"
+    unit_of_measurement: 'W'
+    retain: true
+########## END MQTT ##########
 
   # System Monitor  
   - platform: systemmonitor
@@ -105,26 +167,6 @@ sensor:
       - download
       - upload
     server_id: 3187
-    # Statistics
-  - platform: mqtt
-    name: "Sliding Door"
-    state_topic: "smartthings/Sliding Door/contact"
-    retain: true
-  - platform: mqtt
-    name: "Sliding Door Contact Temperature"
-    state_topic: "smartthings/Sliding Door/temperature"
-    unit_of_measurement: '°F'
-    retain: true
-  - platform: mqtt
-    name: "Sliding Door Contact Battery"
-    state_topic: "smartthings/Sliding Door/battery"
-    unit_of_measurement: "%"
-    retain: true
-  - platform: mqtt
-    name: "Raspberri Pi Plug Usage"
-    state_topic: "smartthings/Raspberry Pi/power"
-    unit_of_measurement: 'W'
-    retain: true
    
 binary_sensor:
   # Command_line
@@ -237,6 +279,13 @@ switch:
     payload_off: "off"
     retain: true
 
+# Inputs
+input_boolean:
+  school_night:
+    name: School Night
+    initial: off
+    icon: mdi:school
+
 input_select:
   log_level:
     name: Log Level
@@ -250,6 +299,7 @@ input_select:
       - debug
       - notset
     initial: warn
+
 # Device Tracker (Custom platform) 
 device_tracker:
   - platform: cppm_tracker
@@ -260,7 +310,8 @@ device_tracker:
     new_device_defaults:
       track_new_devices: false
       hide_if_away: false
-# MQTT Stuff
+
+# MQTT Server (SmartThings)
 mqtt:
   broker: localhost
   port: 1883
