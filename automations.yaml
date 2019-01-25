@@ -183,3 +183,17 @@
   action:
     - service: media_player.turn_off
       entity_id: media_player.chelseas_tv
+
+# Set School Night input to 'off' if school is closed
+# School is closed is determined by command line sensor
+# sensor.school_weather_status (scripts/school_closing.py)
+- alias: Set School Night Weather
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.school_weather_status
+      to: Closed
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.school_night
+        

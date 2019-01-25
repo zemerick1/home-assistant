@@ -118,9 +118,9 @@ sensor:
     unit_of_measurement: '°F'
     retain: true   
   - platform: mqtt
-    name: "Raspberri Pi Plug Usage"
-    state_topic: "smartthings/Raspberry Pi/power"
-    unit_of_measurement: 'W'
+    name: "Bedroom Temperature"
+    state_topic: "smartthings/Bedroom/temperature"
+    unit_of_measurement: '°F'
     retain: true
 ########## END MQTT ##########
 
@@ -151,6 +151,13 @@ sensor:
     name: Last Backup
     command: "python3 /home/homeassistant/.homeassistant/scripts/last_backup.py"
     scan_interval: 86400
+    
+    # Check School Closings
+  - platform: command_line
+    name: School Weather Status
+    command: "python3 /home/homeassistant/.homeassistant/scripts/school_closing.py"
+    scan_interval: 43200
+    
   # Mopar
   - platform: mopar
     username: !secret mopar_user

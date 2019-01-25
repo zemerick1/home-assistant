@@ -28,10 +28,11 @@
       - sensor.sliding_door_contact_battery
       - sensor.sliding_door_contact_temperature
       - sensor.sliding_door
-      - sensor.raspberri_pi_plug_usage
       - sensor.living_room
       - sensor.living_room_battery
       - sensor.living_room_temperature
+      - sensor.bedroom_temperature
+      - sensor.school_weather_status
       - group.school_night
 
   chromecast:
@@ -111,7 +112,18 @@
       - sensor.signal_strength_front_door
       - sensor.signal_strength_garage
       - sensor.signal_strength_back_porch
-      
+  climate:
+    name: Climate
+    view: true
+    entities:
+      - sensor.sliding_door_contact_temperature
+      - sensor.living_room_temperature
+      - sensor.bedroom_temperature
+      - climate.my_ecobee3
+      - weather.my_ecobee3
+      - sensor.my_ecobee3_temperature
+      - camera.tn_weather
+
   mopar:
     name: Car Stats
     control: hidden
