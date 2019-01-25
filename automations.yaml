@@ -129,6 +129,23 @@
       transition: 30
       power: false
 
+# Turn off Bedroom lights if there is no motion
+- alias: No Activity Kill BR
+  trigger:
+    platform: state
+    entity_id:
+    - sensor.bedroom_motion
+    from: active
+    to: inactive
+    for: 00:15:00
+  action:
+  - service: light.turn_off
+    entity_id:
+    - light.14107027cc50e34945a1
+    - light.bedroom_hue
+    - light.br_lifx
+    
+
 # Turn on LR lights when there is activity @ Dark
 - alias: Activity Turn on LR Lights
   trigger:

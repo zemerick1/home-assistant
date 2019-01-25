@@ -100,6 +100,7 @@
       - sensor.back_porch_motion
       - sensor.front_door_motion
       - sensor.garage_motion
+      - sensor.bedroom_motion
       - sensor.battery_level_front_door
       - sensor.battery_level_garage
       - sensor.battery_level_back_porch
