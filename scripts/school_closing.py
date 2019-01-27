@@ -28,6 +28,9 @@ for script in soup(["script", "style"]):
 
 
 # find the appropriate tags and parse them until we find our school.
+reason = ''
+closeTime = ''
+foundCounty = ''
 for county in soup.find_all("article",class_="closing js-block"):
     # Find our county
     foundCounty = county.findChildren()[0].getText()
@@ -38,14 +41,17 @@ for county in soup.find_all("article",class_="closing js-block"):
         closeTime = county.findChildren()[2].getText()
         break
 
-if reason is None: # May use this in the future. (JSON)
-    reason = 'No reason given.'
+if reason == '': # May use this in the future. (JSON)
+	reason = 'No reason given.'
 
 # Convert our string to dateTime object
-closeTime = closeTime.split('T')[0]
-closeTime = datetime.strptime(closeTime,'%Y-%m-%d')
-if closeTime > datetime.now():
-    updatedTime = True
+if closeTime != '':
+	closeTime = closeTime.split('T')[0]
+	closeTime = datetime.strptime(closeTime,'%Y-%m-%d')
+	if closeTime > datetime.now():
+		updatedTime = True
+else:
+	updatedTime = False
 
 if updatedTime and foundCounty == findCounty:
     print('Closed')
