@@ -214,3 +214,17 @@
     - service: input_boolean.turn_off
       entity_id: input_boolean.school_night
         
+# Homeassistant can't handle vivaldi running constantly. It eats up all the RAM
+# If total memory usage hits 75% we need to kill the process.
+# Really just need to add RAM to the pi :D
+- alias: Kill Vivaldi
+  trigger:
+  - platform: template
+    value_template: "{% if states.sensor.memory_use_percent.state | float > 75.0 %} true {% endif %}"
+  action:
+    - service: tts.google_say
+      entity_id: media_player.office_home
+      data:
+        message: "Home Assistant is running low on memory. Killing Vivaldi."
+        cache: false  
+    - service: shell_command.kill_vivaldi

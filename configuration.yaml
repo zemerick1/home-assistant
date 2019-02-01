@@ -276,6 +276,7 @@ tuya:
 # Shell Commands
 shell_command:
   backupha: '/bin/bash /home/homeassistant/.homeassistant/scripts/shell_backup.sh'
+  kill_vivaldi: '/bin/bash /home/homeassistant/.homeassistant/scripts/shell_killvivaldi.sh'
 
 # Switches
 switch:
