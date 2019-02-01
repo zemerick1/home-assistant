@@ -34,7 +34,8 @@
       - sensor.bedroom_temperature
       - sensor.school_weather_status
       - group.school_night
-
+      - sensor.camryn_savings
+      - sensor.chelsea_savings
   chromecast:
     name: Chromecast
     view: true

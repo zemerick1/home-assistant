@@ -63,7 +63,7 @@ sun:
 folder_watcher:
   - folder: /home/homeassistant/.homeassistant
     patterns: 
-      - '*.last'
+      - 'backup.last'
 
 # Sensors
 sensor:
@@ -174,7 +174,17 @@ sensor:
       - download
       - upload
     server_id: 3187
-   
+  - platform: command_line
+    name: Camryn Savings
+    command: "python3 /home/homeassistant/.homeassistant/scripts/amex_camryn.py"
+    unit_of_measurement: '$'
+    scan_interval: 691200
+  - platform: command_line
+    name: Chelsea Savings
+    command: "python3 /home/homeassistant/.homeassistant/scripts/amex_chelsea.py"
+    unit_of_measurement: '$'
+    scan_interval: 691200
+
 binary_sensor:
   # Command_line
   # Zak Presence (CPPM)
