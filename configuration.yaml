@@ -31,10 +31,12 @@ config:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
+  api_password: !secret http_api
   base_url: !secret http_base
   server_port: !secret http_port
   ssl_certificate: !secret http_ssl
   ssl_key: !secret http_key
+  server_host: !secret http_host
   ip_ban_enabled: true
   login_attempts_threshold: 3
 
