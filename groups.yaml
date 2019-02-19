@@ -10,9 +10,9 @@
       - group.cameras
       - sensor.mopar
       - group.mopar
-      - sensor.speedtest_ping
-      - sensor.speedtest_download
-      - sensor.speedtest_upload
+      #- sensor.speedtest_ping
+      #- sensor.speedtest_download
+      #- sensor.speedtest_upload
       - sensor.cpu_temp
       - sensor.last_backup
       - alarm_control_panel.home
@@ -114,6 +114,8 @@
       - sensor.signal_strength_front_door
       - sensor.signal_strength_garage
       - sensor.signal_strength_back_porch
+      - sensor.front_door_lock_battery
+      - sensor.front_door_lock
   climate:
     name: Climate
     view: true

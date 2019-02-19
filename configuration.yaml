@@ -30,6 +30,9 @@ config:
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
   base_url: !secret http_base
+  server_port: !secret http_port
+  ssl_certificate: !secret http_ssl
+  ssl_key: !secret http_key
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -67,63 +70,6 @@ folder_watcher:
 
 # Sensors
 sensor:
-# MQTT Sensors (Separated out because they are messy
-# Motion
-  - platform: mqtt
-    name: "Living Room"
-    state_topic: "smartthings/Living Room/motion"
-    retain: true
-  - platform: mqtt
-    name: "Bedroom Motion"
-    state_topic: "smartthings/Bedroom/motion"
-    retain: true
-  - platform: mqtt
-    name: "Front Door Motion"
-    state_topic: "smartthings/Front Door/motion"
-    retain: true
-  - platform: mqtt
-    name: "Garage Motion"
-    state_topic: "smartthings/garage/motion"
-    retain: true
-  - platform: mqtt
-    name: "Back Porch Motion"
-    state_topic: "smartthings/Back Porch/motion"
-    retain: true
-
-# Contact
-  - platform: mqtt
-    name: "Sliding Door"
-    state_topic: "smartthings/Sliding Door/contact"
-    retain: true
-    
-# Battery / MISC
-  - platform: mqtt
-    name: "Sliding Door Contact Temperature"
-    state_topic: "smartthings/Sliding Door/temperature"
-    unit_of_measurement: '°F'
-    retain: true
-  - platform: mqtt
-    name: "Sliding Door Contact Battery"
-    state_topic: "smartthings/Sliding Door/battery"
-    unit_of_measurement: "%"
-    retain: true
-  - platform: mqtt
-    name: "Living Room Battery"
-    state_topic: "smartthings/Living Room/battery"
-    unit_of_measurement: "%"
-    retain: true
-  - platform: mqtt
-    name: "Living Room Temperature"
-    state_topic: "smartthings/Living Room/temperature"
-    unit_of_measurement: '°F'
-    retain: true   
-  - platform: mqtt
-    name: "Bedroom Temperature"
-    state_topic: "smartthings/Bedroom/temperature"
-    unit_of_measurement: '°F'
-    retain: true
-########## END MQTT ##########
-
   # System Monitor  
   - platform: systemmonitor
     resources:
@@ -164,16 +110,16 @@ sensor:
     password: !secret mopar_pass
     pin: !secret mopar_pin
   # Speedtest
-  - platform: speedtest
-    hour:
-      - 0
-      - 12
-      - 18
-    monitored_conditions:
-      - ping
-      - download
-      - upload
-    server_id: 3187
+  #- platform: speedtest
+  #  hour:
+  #    - 0
+  #    - 12
+  #    - 18
+  #  monitored_conditions:
+  #    - ping
+  #    - download
+  #    - upload
+  #  server_id: 3187
   - platform: command_line
     name: Camryn Savings
     command: "python3 /home/homeassistant/.homeassistant/scripts/amex_camryn.py"
@@ -267,6 +213,7 @@ hue:
     - host: 192.168.2.64
       allow_unreachable: true
       allow_hue_groups: false
+
 # Tuya / Geenie Lights
 tuya:
   username: !secret tuya_user
@@ -279,23 +226,6 @@ shell_command:
   kill_vivaldi: '/bin/bash /home/homeassistant/.homeassistant/scripts/shell_killvivaldi.sh'
 
 # Switches
-switch:
-  - platform: mqtt
-    name: "Raspberri Pi"
-    state_topic: "smartthings/Raspberri Pi/switch"
-    command_topic: "smartthings/Raspberri Pi/switch"
-    payload_on: "on"
-    payload_off: "off"
-    retain: true
-  - platform: mqtt
-    name: "LR Fan Switch"
-    state_topic: "smartthings/LR Fan Switch/switch"
-    command_topic: "smartthings/LR Fan Switch/switch"
-    brightness_state_topic: "smartthings/LR Fan Switch/level"
-    brightness_command_topic: "smartthings/LR Fan Switch/level"
-    payload_on: "on"
-    payload_off: "off"
-    retain: true
 
 # Inputs
 input_boolean:
@@ -329,16 +259,7 @@ device_tracker:
       track_new_devices: false
       hide_if_away: false
 
-# MQTT Server (SmartThings)
-mqtt:
-  broker: localhost
-  port: 1883
-  protocol: 3.1
-  keepalive: 60
-  client_id: smartthings
-  username: !secret mqtt_user
-  password: !secret mqtt_pass
-      
+     
 ################
 #device_tracker: !include device_tracker.yaml
 zone: !include zones.yaml
