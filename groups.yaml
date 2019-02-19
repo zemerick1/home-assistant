@@ -54,20 +54,20 @@
     view: true
     entities:
       - media_player.kitchen_display
-      - light.kitchen_bar_1
-      - light.kitchen_sink
+      - light.kitchen_bar_1_2
+      - light.kitchen_sink_2
       - light.14107027cc50e349556d
       - switch.raspberri_pi
   livingroom:
     name: Living Room
     view: true
     entities:
-      - sensor.sliding_door_contact_battery
-      - sensor.sliding_door_contact_temperature
-      - sensor.sliding_door
+      - sensor.sliding_door_battery
+      - sensor.sliding_door_temperature_measurement
+      - sensor.sliding_door_contact
       - switch.lr_fan_switch
-      - light.lr_lamp_1
-      - light.lr_lamp_2
+      - light.lr_lamp_1_2
+      - light.lr_lamp_2_2
   cameras:
     name: Camera
     view: false
