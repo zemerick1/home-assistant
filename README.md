@@ -9,4 +9,6 @@ Current version
 * Removed MQTT Stuff -- just messy.
 
 # TODO
-Troubleshoot ST integration.
+1. Troubleshoot ST integration.
+2. Fix custom scripts. Requests probably just needs added to system env.
+
