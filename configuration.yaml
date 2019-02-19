@@ -16,6 +16,8 @@ homeassistant:
   whitelist_external_dirs:
   - /home/homeassistant/.homeassistant
 
+system_health:
+
 # Recorder
 recorder: !include recorder.yaml
 # Show links to resources in log and frontend
@@ -58,7 +60,8 @@ history:
 # View all events in a logbook
 logbook:
 logger:
-  default: info
+  default: info 
+
 # Enables a map showing the location of tracked devices
 map:
 
