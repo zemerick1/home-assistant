@@ -33,6 +33,9 @@ http:
   server_port: !secret http_port
   ssl_certificate: !secret http_ssl
   ssl_key: !secret http_key
+  ip_ban_enabled: true
+  login_attempts_threshold: 3
+
 
 # Checks for available updates
 # Note: This component will send some information about your system to
