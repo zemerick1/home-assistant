@@ -215,11 +215,15 @@ duckdns:
   access_token: !secret duck_api
 
 # Lights (Moved to smartthings)
+tuya:
+  username: !secret tuya_user
+  password: !secret tuya_pass
+  country_code: 1
 
 # Shell Commands
 shell_command:
-  backupha: '/bin/bash /home/homeassistant/.homeassistant/scripts/shell_backup.sh'
-  kill_vivaldi: '/bin/bash /home/homeassistant/.homeassistant/scripts/shell_killvivaldi.sh'
+  backupha: /bin/bash /home/homeassistant/.homeassistant/scripts/shell_backup.sh
+  kill_vivaldi: /home/homeassistant/.homeassistant/scripts/shell_killvivaldi.sh
 
 # Switches
 
