@@ -214,19 +214,7 @@ duckdns:
   domain: !secret duck_domain
   access_token: !secret duck_api
 
-# Lights
-# Phillips Hue
-hue:
-  bridges:
-    - host: 192.168.2.64
-      allow_unreachable: true
-      allow_hue_groups: false
-
-# Tuya / Geenie Lights
-tuya:
-  username: !secret tuya_user
-  password: !secret tuya_pass
-  country_code: 1
+# Lights (Moved to smartthings)
 
 # Shell Commands
 shell_command:
