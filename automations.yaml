@@ -82,6 +82,7 @@
 
  # Home Assistant Backup - Notify when complete   
 - alias: Notify backup complete
+  id: backup_complete
   initial_state: 'on'    
   trigger:
     platform: event
