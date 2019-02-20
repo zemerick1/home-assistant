@@ -1,0 +1,42 @@
+# Zak
+  - name: notify_zak
+    platform: smtp
+    server: !secret smtp_server
+    port: 587
+    timeout: 15
+    sender: !secret smtp_sender
+    encryption: none
+    username: !secret smtp_sender
+    password: !secret smtp_password
+    recipient:
+      - !secret smtp_recipient_zak
+    sender_name: Home Assistant
+
+# Amy
+  - name: notify_amy
+    platform: smtp
+    server: !secret smtp_server
+    port: 587
+    timeout: 15
+    sender: !secret smtp_sender
+    encryption: none
+    username: !secret smtp_sender
+    password: !secret smtp_password
+    recipient:
+      - !secret smtp_recipient_amy
+    sender_name: Home Assistant
+
+# Family
+  - name: notify_family
+    platform: smtp
+    server: !secret smtp_server
+    port: 587
+    timeout: 15
+    sender: !secret smtp_sender
+    encryption: none
+    username: !secret smtp_sender
+    password: !secret smtp_password
+    recipient:
+      - !secret smtp_recipient_amy
+      - !secret smtp_recipient_zak
+    sender_name: Home Assistant 

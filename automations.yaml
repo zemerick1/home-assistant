@@ -79,6 +79,10 @@
         message: "Home Assistant backup has started!"
         cache: false
     - service: shell_command.backupha
+    - service: notify.notify_zak
+      data:
+        title: 'HA Notice'
+        message: 'HA Backup has started.'
 
  # Home Assistant Backup - Notify when complete   
 - alias: Notify backup complete
@@ -168,9 +172,9 @@
   trigger:
     platform: state
     entity_id:
-    - sensor.bedroom_motion
-    from: active
-    to: inactive
+    - binary_sensor.bedroom_motion
+    from: 'on'
+    to: 'off'
     for: 00:15:00
   action:
   - service: light.turn_off
@@ -224,7 +228,7 @@
 # If total memory usage hits 75% we need to kill the process.
 # Really just need to add RAM to the pi :D
 - alias: Kill Vivaldi
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
   - platform: template
     value_template: "{% if states.sensor.memory_use_percent.state | float > 75.0 %} true {% endif %}"
@@ -235,3 +239,23 @@
         message: "Home Assistant is running low on memory. Killing Vivaldi."
         cache: false  
     - service: shell_command.kill_vivaldi
+
+# Test Notify
+- alias: Notify_Zak
+  id: notify_zak
+  initial_state: 'on'
+  trigger:
+  - entity_id:
+    - binary_sensor.living_room_motion
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+  - service: notify.notify_zak
+    data:
+      title: 'Intruder alert'
+      message: 'Intruder alert at apartment!!'
+      data:
+#        images:
+#          - 'http://192.168.2.76/image/jpeg.cgi'
+#                    - /home/pi/snapshot2.jpg

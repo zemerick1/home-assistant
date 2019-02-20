@@ -247,8 +247,9 @@ device_tracker:
     new_device_defaults:
       track_new_devices: false
       hide_if_away: false
-
-     
+# Notify
+notify: !include notify.yaml
+    
 ################
 #device_tracker: !include device_tracker.yaml
 zone: !include zones.yaml
