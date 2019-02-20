@@ -1,5 +1,6 @@
 # Leaving Home - Turn Everything Off #
 - alias: Family Leave
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id: group.family
@@ -15,6 +16,7 @@
 
 # Greet the family
 - alias: Family Home
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id:
@@ -66,6 +68,7 @@
 
 # Home Assistant Backup
 - alias: Backup HA
+  initial_state: 'on'
   trigger:
     platform: time
     at: '22:00:00'
@@ -78,7 +81,8 @@
     - service: shell_command.backupha
 
  # Home Assistant Backup - Notify when complete   
-- alias: Notify backup complete    
+- alias: Notify backup complete
+  initial_state: 'on'    
   trigger:
     platform: event
     event_type: folder_watcher
@@ -97,6 +101,7 @@
 # Set Log level dynamically 
 #
 - alias: Set Log Level
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id:
@@ -109,12 +114,13 @@
 
 # No activity turn off LR lights
 - alias: No Activity Kill LR
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id:
-    - sensor.living_room
-    from: active
-    to: inactive
+    - binary_sensor.living_room_motion
+    from: 'on'
+    to: 'off'
     for: 00:15:00
   action:
   - service: homeassistant.turn_off
@@ -128,8 +134,36 @@
       transition: 30
       power: false
 
+# Turn on LR lights when there is activity @ Dark
+- id: DFHIDFHOSIYHFD
+  alias: Activity Turn on LR Lights
+  initial_state: 'on'
+  trigger:
+  - entity_id:
+    - binary_sensor.living_room_motion
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - after: sunset
+    before: sunrise
+    condition: sun
+  action:
+  - entity_id:
+    - switch.lr_fan_switch
+    service: homeassistant.turn_on
+  - data:
+      brightness_pct: 100
+      power: true
+      transition: 30
+    entity_id:
+    - light.lr_lamp_1
+    - light.lr_lamp_2
+    service: light.lifx_set_state
+        
 # Turn off Bedroom lights if there is no motion
 - alias: No Activity Kill BR
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id:
@@ -143,39 +177,10 @@
     - light.14107027cc50e34945a1
     - light.bedroom_hue
     - light.br_lifx
-    
 
-# Turn on LR lights when there is activity @ Dark
-- alias: Activity Turn on LR Lights
-  trigger:
-    platform: state
-    entity_id:
-    - sensor.living_room
-    from: inactive
-    to: active
-  condition:
-    - condition: or
-      conditions:
-        - condition: sun
-          after: sunset
-        - condition: sun
-          before: sunrise    
-  action:
-  - service: homeassistant.turn_on
-    entity_id:
-    - switch.lr_fan_switch
-  - service: light.lifx_set_state
-    entity_id:  
-    - light.lr_lamp_1
-    - light.lr_lamp_2
-    data:
-      transition: 30
-      brightness_pct: 100
-      power: true
-        
- 
 # Turn off Chromecast on school nights after @ midnight
 - alias: Turn off Chromecast after time
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id:
@@ -204,6 +209,7 @@
 # School is closed is determined by command line sensor
 # sensor.school_weather_status (scripts/school_closing.py)
 - alias: Set School Night Weather
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id:
@@ -217,6 +223,7 @@
 # If total memory usage hits 75% we need to kill the process.
 # Really just need to add RAM to the pi :D
 - alias: Kill Vivaldi
+  initial_state: 'on'
   trigger:
   - platform: template
     value_template: "{% if states.sensor.memory_use_percent.state | float > 75.0 %} true {% endif %}"
