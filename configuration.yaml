@@ -94,22 +94,16 @@ sensor:
       - total_cameras
       - battery_level
       - signal_strength
-  # CPU Temp
-  - platform: command_line
-    name: CPU Temp
-    command: "python3 /home/homeassistant/.homeassistant/scripts/cpu_temp.py"
-    scan_interval: 3600
-    unit_of_measurement: '°F'
   # Last Backup Date
   - platform: command_line
     name: Last Backup
-    command: "python3 /home/homeassistant/.homeassistant/scripts/last_backup.py"
+    command: "/opt/rh/rh-python36/root/bin/python3 /home/homeassistant/.homeassistant/scripts/last_backup.py"
     scan_interval: 86400
     
-    # Check School Closings
+  # Check School Closings
   - platform: command_line
     name: School Weather Status
-    command: "python3 /home/homeassistant/.homeassistant/scripts/school_closing.py"
+    command: "/opt/rh/rh-python36/root/bin/python3 /home/homeassistant/.homeassistant/scripts/school_closing.py"
     scan_interval: 43200
     
   # Mopar
@@ -118,24 +112,19 @@ sensor:
     password: !secret mopar_pass
     pin: !secret mopar_pin
   # Speedtest
-  #- platform: speedtest
-  #  hour:
-  #    - 0
-  #    - 12
-  #    - 18
-  #  monitored_conditions:
-  #    - ping
-  #    - download
-  #    - upload
-  #  server_id: 3187
+  - platform: fastdotcom
+    hour:
+      - 0
+      - 12
+      - 18
   - platform: command_line
     name: Camryn Savings
-    command: "python3 /home/homeassistant/.homeassistant/scripts/amex_camryn.py"
+    command: "/opt/rh/rh-python36/root/bin/python3 /home/homeassistant/.homeassistant/scripts/amex_camryn.py"
     unit_of_measurement: '$'
     scan_interval: 691200
   - platform: command_line
     name: Chelsea Savings
-    command: "python3 /home/homeassistant/.homeassistant/scripts/amex_chelsea.py"
+    command: "/opt/rh/rh-python36/root/bin/python3 /home/homeassistant/.homeassistant/scripts/amex_chelsea.py"
     unit_of_measurement: '$'
     scan_interval: 691200
 
