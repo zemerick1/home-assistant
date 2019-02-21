@@ -1,0 +1,279 @@
+resources:
+  - url: /local/aarlo-glance.js
+    type: module
+  - url: /local/mini-graph-card-bundle.js?v=0.3.0
+    type: module
+  - url: 'https://cdn.jsdelivr.net/gh/bramkragten/custom-ui@master/weather-card/weather-card.min.js'
+    type: module
+  - url: /local/custom-lovelace/compact-custom-header/compact-custom-header.js
+    type: module
+title: Home
+views:
+  - cards:
+      - type: 'custom:compact-custom-header'
+      - entities:
+          - sensor.memory_use_percent
+          - sensor.processor_use
+        name: System Stats
+        type: 'custom:mini-graph-card'
+        unit: '%'
+        animate: true
+      - entities:
+          - device_tracker.amy
+          - device_tracker.zak
+          - device_tracker.camryn
+          - device_tracker.chelsea
+          - device_tracker.clayton
+        show_header_toggle: false
+        title: Family
+        type: entities
+      - entity: camera.aarlo_front_door
+        name: Front Door
+        show:
+          - motion
+          - sound
+          - snapshot
+          - battery_level
+          - signal_strength
+          - captured_today
+        type: 'custom:aarlo-glance'
+      - entity: camera.aarlo_garage
+        name: Garage
+        show:
+          - motion
+          - sound
+          - snapshot
+          - battery_level
+          - signal_strength
+          - captured_today
+        type: 'custom:aarlo-glance'
+      - entity: camera.aarlo_back_porch
+        name: Back Porch
+        show:
+          - motion
+          - sound
+          - snapshot
+          - battery_level
+          - signal_strength
+          - captured_today
+        type: 'custom:aarlo-glance'
+      - entity: camera.bedroom
+        type: picture-entity
+      - entities:
+          - input_boolean.school_night
+        show_header_toggle: false
+        title: School Night
+        type: entities
+      - entities:
+          - sensor.2016_chrysler_200c
+          - sensor.2016_dodge_charger
+        show_header_toggle: false
+        title: Car Stats
+        type: entities
+      - entity: camera.tn_weather
+        type: picture-entity
+      - entity: climate.my_ecobee3
+        type: thermostat
+      - entity: weather.my_ecobee3
+        type: 'custom:weather-card'
+        icons: /local/custom-lovelace/weather-card/icons/
+        name: Weather
+    badges:
+      - binary_sensor.zak_emerick_s_android_presence
+      - sensor.last_backup
+      - sensor.yr_symbol
+      - sensor.living_room_battery
+      - sensor.bedroom_temperature
+      - sensor.school_weather_status
+      - sensor.camryn_savings
+      - sensor.chelsea_savings
+      - sun.sun
+    path: default_view
+    title: Home
+  - badges: []
+    cards:
+      - type: 'custom:compact-custom-header'
+      - entity: media_player.bedroom_speaker
+        type: media-control
+      - entity: media_player.bedroom_tv
+        type: media-control
+      - entity: media_player.chelseas_tv
+        type: media-control
+      - entity: media_player.kitchen_display
+        type: media-control
+      - entity: media_player.man_cave_chromecast
+        type: media-control
+      - entity: media_player.office_home
+        type: media-control
+      - entity: media_player.zak_tv
+        type: media-control
+      - entity: media_player.all_speakers
+        type: media-control
+    icon: 'mdi:google-chrome'
+    path: chromecast
+    title: Chromecast
+  - badges: []
+    cards:
+      - type: 'custom:compact-custom-header'
+      - entity: media_player.kitchen_display
+        type: media-control
+      - entities:
+          - entity: light.kitchen_bar_1_2
+          - entity: light.kitchen_sink_2
+          - entity: light.14107027cc50e349556d
+        show_header_toggle: true
+        title: Lights
+        type: entities
+    path: kitchen
+    title: Kitchen
+  - badges: []
+    cards:
+      - type: 'custom:compact-custom-header'
+      - entities:
+          - entity: light.lr_lamp_1_2
+          - entity: light.lr_lamp_2_2
+          - entity: light.lr_fan_switch
+          - entity: sensor.sliding_door_temperature_measurement
+          - entity: sensor.sliding_door_battery
+          - entity: binary_sensor.sliding_door_contact
+          - entity: binary_sensor.sliding_door_acceleration
+        type: entities
+    path: livingroom
+    title: Living Room
+  - cards:
+      - type: 'custom:compact-custom-header'
+      - entity: camera.bedroom
+        type: picture-entity
+      - entity: lock.front_door_lock
+        hold_action:
+          action: more-info
+        tap_action:
+          action: toggle
+        type: entity-button
+      - type: alarm-panel
+        states:
+          - arm_home
+          - arm_away
+        entity: alarm_control_panel.aarlo_home
+      - type: picture-entity
+        entity: camera.aarlo_back_porch
+      - type: picture-entity
+        entity: camera.aarlo_garage
+      - entity: camera.aarlo_front_door
+        type: picture-entity
+    badges:
+      - lock.front_door_lock
+      - binary_sensor.living_room_motion
+      - binary_sensor.bedroom_motion
+      - sensor.aarlo_arlo_cameras
+      - sensor.aarlo_battery_level_back_porch
+      - sensor.aarlo_battery_level_front_door
+      - sensor.aarlo_battery_level_garage
+      - sensor.aarlo_signal_strength_back_porch
+      - sensor.aarlo_signal_strength_front_door
+      - sensor.aarlo_signal_strength_garage
+      - sensor.front_door_lock_battery
+    path: security
+    title: Security
+  - cards:
+      - type: 'custom:compact-custom-header'
+      - entities:
+          - sensor.bedroom_temperature
+          - sensor.my_ecobee3_temperature
+          - sensor.living_room_temperature_measurement
+          - sensor.sliding_door_temperature_measurement
+        name: Home Temperatures
+        type: 'custom:mini-graph-card'
+        unit: F
+        animate: true
+      - entity: camera.tn_weather
+        type: picture-entity
+      - entity: climate.my_ecobee3
+        type: thermostat
+      - entity: weather.my_ecobee3
+        type: weather-forecast
+    badges:
+      - binary_sensor.bedroom_motion
+      - binary_sensor.bedroom_occupancy
+    path: climate
+    title: Climate
+  - badges: []
+    cards:
+      - type: 'custom:compact-custom-header'
+      - entities:
+          - entity: automation.activity_turn_on_lr_lights
+          - entity: automation.backup_ha
+          - entity: automation.family_home
+          - entity: automation.family_leave
+          - entity: automation.kill_vivaldi
+          - entity: automation.no_activity_kill_br
+          - entity: automation.no_activity_kill_lr
+          - entity: automation.notify_backup_complete
+          - entity: automation.notify_zak
+          - entity: automation.set_log_level
+          - entity: automation.set_school_night_weather
+          - entity: automation.turn_off_chromecast_after_time
+          - entity: automation.amy_leave
+          - entity: automation.kids_leave
+        title: All Automations
+        type: entities
+    path: automations
+    title: Automations
+  - badges: []
+    cards:
+      - type: 'custom:compact-custom-header'
+      - entities:
+          - entity: light.14107027cc50e34945a1
+          - entity: light.14107027cc50e349473f
+          - entity: light.bedroom_hue_2
+          - entity: light.br_lifx
+          - entity: light.basement_main_2
+          - entity: light.basement_furnace_2
+          - entity: light.kitchen_bar_1_2
+          - entity: light.kitchen_sink_2
+          - entity: light.14107027cc50e349556d
+          - entity: light.lr_lamp_1
+          - entity: light.lr_lamp_2
+          - entity: light.lr_fan_switch
+        show_header_toggle: true
+        title: All Lights
+        type: entities
+    panel: false
+    title: Lights
+  - badges: []
+    cards:
+      - type: 'custom:compact-custom-header'
+      - entities:
+          - input_select.log_level
+        title: Input select
+        type: entities
+    path: debug
+    title: Debug
+  - badges: []
+    cards:
+      - type: 'custom:compact-custom-header'
+      - entity: sensor.chelsea_savings
+        max: 1000
+        min: 0
+        name: Chelsea
+        severity:
+          green: 750
+          red: 200
+          yellow: 450
+        theme: Backend-selected
+        type: gauge
+        unit: $
+      - entity: sensor.camryn_savings
+        max: 1000
+        min: 0
+        name: Camryn
+        severity:
+          green: 750
+          red: 200
+          yellow: 450
+        theme: Backend-selected
+        type: gauge
+        unit: $
+    icon: ''
+    panel: false
+    title: Savings

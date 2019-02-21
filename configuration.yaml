@@ -59,6 +59,10 @@ conversation:
 # Enables support for tracking state changes over time
 history:
 
+# Lovelace
+lovelace:
+  mode: yaml
+
 # View all events in a logbook
 logbook:
 logger:

@@ -13,6 +13,15 @@
         - group.all_lights
         - switch.lr_fan_switch
         - group.chromecast
+    - service: lock.lock
+      entity_id:
+        - lock.front_door_lock
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.aarlo_home
+    - service: notify.notify_family
+      data:
+        title: 'HA Notification'
+        message: 'Everyone has left the house. Locking up, turning off lights, stopping all Chromecasts, and arming alarm.'
 
 # Amy Leave Notify
 - alias: Amy leave
