@@ -1,3 +1,48 @@
+# Away and activity detected inside.
+- alias: Away Activity
+  id: away_activity_alert
+  initial_state: 'off'
+  trigger:
+    - platform: state
+      entity_id: lock.front_door_lock
+      from: 'locked'
+      to: 'unlocked'
+    - platform: state
+      entity_id:
+        - binary_sensor.living_room_motion
+        - binary_sensor.bedroom_motion
+        - binary_sensor.bedroom_occupancy
+        - binary_sensor.my_ecobee3_occupancy
+        - binary_sensor.sliding_door_contact
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.aarlo_home
+      state: 'armed_away'
+  action:
+    - service: notify.notify_family
+      data_template:
+        title: 'HA ALARM'
+        message:  >
+          {% set sensor = trigger.entity_id.split('.')[1]|replace('_', ' ')%}
+          {%- macro txt_sentence(sensor) -%}
+          {{ sensor + " has been tripped and the alarm is armed. Check cameras and HA @ https://ha.emerickcc.com:8122" }}
+          {%- endmacro -%}
+          {{txt_sentence(sensor)}}
+    - service: camera.aarlo_request_snapshot
+    - service: media_player.volume_set
+      data:
+        entity_id: all
+        volume_level: 1
+    - service: media_player.play_media
+      entity_id:
+        - media_player.office_home
+        - group.chromecast
+      data:
+        media_content_id: "https://ha.emerickcc.com:8122/local/sounds/police_siren.mp3"
+        media_content_type: 'music'
+
 # Leaving Home - Turn Everything Off #
 - alias: Family Leave
   initial_state: 'on'
@@ -61,7 +106,7 @@
           {{ person + " has been offline for at least 10 minutes." }}
           {%- endmacro -%}
           {{txt_sentence(person)}}
-        
+          
 # Greet the family
 - alias: Family Home
   initial_state: 'on'

@@ -1,3 +1,4 @@
+title: Home
 resources:
   - url: /local/aarlo-glance.js
     type: module
@@ -7,7 +8,6 @@ resources:
     type: module
   - url: /local/custom-lovelace/compact-custom-header/compact-custom-header.js
     type: module
-title: Home
 views:
   - cards:
       - type: 'custom:compact-custom-header'
@@ -142,8 +142,6 @@ views:
     title: Living Room
   - cards:
       - type: 'custom:compact-custom-header'
-      - entity: camera.bedroom
-        type: picture-entity
       - entity: lock.front_door_lock
         hold_action:
           action: more-info
@@ -155,11 +153,37 @@ views:
           - arm_home
           - arm_away
         entity: alarm_control_panel.aarlo_home
-      - type: picture-entity
-        entity: camera.aarlo_back_porch
-      - type: picture-entity
-        entity: camera.aarlo_garage
       - entity: camera.aarlo_front_door
+        name: Front Door
+        show:
+          - motion
+          - sound
+          - snapshot
+          - battery_level
+          - signal_strength
+          - captured_today
+        type: 'custom:aarlo-glance'
+      - entity: camera.aarlo_garage
+        name: Garage
+        show:
+          - motion
+          - sound
+          - snapshot
+          - battery_level
+          - signal_strength
+          - captured_today
+        type: 'custom:aarlo-glance'
+      - entity: camera.aarlo_back_porch
+        name: Back Porch
+        show:
+          - motion
+          - sound
+          - snapshot
+          - battery_level
+          - signal_strength
+          - captured_today
+        type: 'custom:aarlo-glance'
+      - entity: camera.bedroom
         type: picture-entity
     badges:
       - lock.front_door_lock
@@ -215,6 +239,7 @@ views:
           - entity: automation.turn_off_chromecast_after_time
           - entity: automation.amy_leave
           - entity: automation.kids_leave
+          - entity: automation.away_activity
         title: All Automations
         type: entities
     path: automations
