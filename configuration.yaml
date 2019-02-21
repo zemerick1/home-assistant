@@ -63,6 +63,8 @@ history:
 logbook:
 logger:
   default: info
+  logs:
+    homeassistant.components.http: critical
 
 # Enables a map showing the location of tracked devices
 map:
@@ -178,7 +180,7 @@ aarlo:
 alarm_control_panel:
   - platform: aarlo
     home_mode_name: "front and garage (and LR)"
-    away_mode_name: "Armed"
+    away_mode_name: "armed"
 
 # Load ffmpeg
 ffmpeg:

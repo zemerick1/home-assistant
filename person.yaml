@@ -3,3 +3,9 @@
   user_id: 8913182e9fdc4721aed16cd5b7025999
   device_trackers:
     - device_tracker.Zak
+    - device_tracker.zak_laptop
+
+- name: Amy
+  id: amy
+  device_trackers:
+    - device_tracker.Amy
