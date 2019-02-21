@@ -87,7 +87,7 @@ sensor:
   # Weather prediction
   - platform: yr
   # ARLO Cameras
-  - platform: arlo
+  - platform: aarlo
     monitored_conditions:
       - captured_today
       - last_capture
@@ -111,12 +111,7 @@ sensor:
     username: !secret mopar_user
     password: !secret mopar_pass
     pin: !secret mopar_pin
-  # Speedtest
-  - platform: fastdotcom
-    hour:
-      - 0
-      - 12
-      - 18
+    
   - platform: command_line
     name: Camryn Savings
     command: "/opt/rh/rh-python36/root/bin/python3 /home/homeassistant/.homeassistant/scripts/amex_camryn.py"
@@ -128,6 +123,10 @@ sensor:
     unit_of_measurement: '$'
     scan_interval: 691200
 
+# Fastdotcom
+fastdotcom:
+  scan_interval:
+    hours: 6    
 binary_sensor:
   # Command_line
   # Zak Presence (CPPM)
@@ -171,22 +170,22 @@ ecobee:
   api_key: !secret ecobee_api
 
 # Cameras (Arlo)
-arlo:
+aarlo:
   username: !secret arlo_user
   password: !secret arlo_pass
 
 #### Removed until resolved by pyArlo team ####
-#alarm_control_panel:
-#  - platform: arlo
-#    home_mode_name: "front and garage"
-#    away_mode_name: "Armed"
+alarm_control_panel:
+  - platform: aarlo
+    home_mode_name: "front and garage (and LR)"
+    away_mode_name: "Armed"
 
 # Load ffmpeg
 ffmpeg:
   ffmpeg_bin: /usr/bin/ffmpeg
 
 camera:
-  - platform: arlo
+  - platform: aarlo
     ffmpeg_arguments: '-pred 1 -q:v 2'
   - platform: generic
     still_image_url: https://icons.wxug.com/data/weather-maps/radar/united-states/bowling-green-kentucky-region-current-radar.gif
@@ -249,6 +248,9 @@ device_tracker:
       hide_if_away: false
 # Notify
 notify: !include notify.yaml
+
+# Person
+person: !include person.yaml
     
 ################
 #device_tracker: !include device_tracker.yaml

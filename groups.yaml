@@ -70,9 +70,9 @@
     control: hidden
     icon: mdi:message-video
     entities:
-      - camera.back_porch
-      - camera.front_door
-      - camera.garage
+      - camera.aarlo_back_porch
+      - camera.aarlo_front_door
+      - camera.aarlo_garage
       - camera.bedroom
 
   security:
