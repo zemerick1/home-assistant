@@ -1,7 +1,7 @@
 # Away and activity detected inside.
 - alias: Away Activity
   id: away_activity_alert
-  initial_state: 'off'
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: lock.front_door_lock
@@ -212,6 +212,7 @@
 
 # No activity turn off LR lights
 - alias: No Activity Kill LR
+  id: no_activity_kill_lr
   initial_state: 'on'
   trigger:
     platform: state
@@ -221,9 +222,9 @@
     to: 'off'
     for: 00:15:00
   action:
-  - service: homeassistant.turn_off
+  - service: light.turn_off
     entity_id:
-    - switch.lr_fan_switch
+    - light.lr_fan_switch
   - service: light.lifx_set_state
     entity_id:
     - light.lr_lamp_1
@@ -248,8 +249,8 @@
     condition: sun
   action:
   - entity_id:
-    - switch.lr_fan_switch
-    service: homeassistant.turn_on
+    - light.lr_fan_switch
+    service: light.turn_on
   - data:
       brightness_pct: 100
       power: true

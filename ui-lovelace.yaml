@@ -4,7 +4,7 @@ resources:
     type: module
   - url: /local/mini-graph-card-bundle.js?v=0.3.0
     type: module
-  - url: 'https://cdn.jsdelivr.net/gh/bramkragten/custom-ui@master/weather-card/weather-card.min.js'
+  - url: /local/custom-lovelace/weather-card/weather-card.js
     type: module
   - url: /local/custom-lovelace/compact-custom-header/compact-custom-header.js
     type: module
@@ -74,16 +74,16 @@ views:
         type: picture-entity
       - entity: climate.my_ecobee3
         type: thermostat
-      - entity: weather.my_ecobee3
+      - entity: weather.dark_sky
         type: 'custom:weather-card'
-        icons: /local/custom-lovelace/weather-card/icons/
-        name: Weather
+        icons: "/local/custom-lovelace/weather-card/icons/"
     badges:
+      - device_tracker.amy_fitbit_bt
+      - device_tracker.galaxy_note_8
       - binary_sensor.zak_emerick_s_android_presence
       - sensor.last_backup
       - sensor.yr_symbol
       - sensor.living_room_battery
-      - sensor.bedroom_temperature
       - sensor.school_weather_status
       - sensor.camryn_savings
       - sensor.chelsea_savings
@@ -214,8 +214,9 @@ views:
         type: picture-entity
       - entity: climate.my_ecobee3
         type: thermostat
-      - entity: weather.my_ecobee3
-        type: weather-forecast
+      - entity: weather.dark_sky
+        type: 'custom:weather-card'
+        icons: "/local/custom-lovelace/weather-card/icons/"
     badges:
       - binary_sensor.bedroom_motion
       - binary_sensor.bedroom_occupancy

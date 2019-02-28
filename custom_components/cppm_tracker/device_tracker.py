@@ -1,7 +1,4 @@
 import logging
-import json
-
-from datetime import datetime
 from datetime import timedelta
 import voluptuous as vol
 import homeassistant.components as core
@@ -10,14 +7,18 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.components.device_tracker import PLATFORM_SCHEMA, DeviceScanner, DOMAIN
 from homeassistant.components import device_tracker
 from homeassistant.const import (
-    STATE_HOME, STATE_NOT_HOME, CONF_HOST, CONF_API_KEY, CONF_PASSWORD, CONF_SCAN_INTERVAL
+    STATE_HOME, STATE_NOT_HOME, CONF_HOST, CONF_API_KEY, CONF_SCAN_INTERVAL, CONF_USERNAME
 )
 
+REQUIREMENTS = ['clearpasspy==1.0.2']
+
 SCAN_INTERVAL = timedelta(seconds=120)
+CONF_USERNAME = 'client_id'
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_HOST): cv.string,
-    vol.Required(CONF_PASSWORD): cv.string,
+    vol.Required(CONF_USERNAME): cv.string,
+    vol.Required(CONF_API_KEY): cv.string,
     vol.Optional(CONF_SCAN_INTERVAL, default=SCAN_INTERVAL): cv.time_period
 })
 
@@ -30,22 +31,26 @@ _LOGGER.setLevel(logging.DEBUG)
 _LOGGER.addHandler(logging.StreamHandler())
 
 CONF_HOST = 'host'
-CONF_API_KEY = 'password'
+CONF_API_KEY = 'api_key'
 CONF_SCAN_INTERVAL= 'scan_interval'
 
-def get_scanner(hass, config):
+async def get_scanner(hass, config):
     cppm_host = config[DOMAIN].get(CONF_HOST)
     api_key = config[DOMAIN].get(CONF_API_KEY)
+    client_id = config[DOMAIN].get(CONF_USERNAME)
     scan_interval = config[DOMAIN].get(CONF_SCAN_INTERVAL)
-    newScan = CPPMDeviceScanner(hass, cppm_host, api_key, scan_interval)
+    grant_type = 'client_credentials'
+    newScan = CPPMDeviceScanner(hass, cppm_host, client_id, api_key, grant_type, scan_interval)
     return newScan if newScan.success_init else None
 
 class CPPMDeviceScanner(DeviceScanner):
-    def __init__(self, hass, cppm_host, api_key, scan_interval):
+    def __init__(self, hass, cppm_host, client_id, api_key, grant_type, scan_interval):
         _LOGGER.debug("-------------INIT CALLED--------------")
         self._hass = hass
         self._cppm_host = cppm_host
         self._api_key = api_key
+        self._grant_type = grant_type
+        self._client_id = client_id
         self._scan_int = scan_interval
         self.success_init = self.get_cppm_data()
 
@@ -57,38 +62,28 @@ class CPPMDeviceScanner(DeviceScanner):
     async def async_get_device_name(self, device):
         _LOGGER.debug("------ RESOLVING DEVICE NAME ----")
         return [device['name'] for device in self.results]
-
-    async def async_get_extra_attributes(self, device):
-        """Return the IP of the given device."""
-        filter_ip = next((
-            result['ip'] for result in self.results
-            if result['mac'] == device), None)
-        return {'ip': filter_ip}
-
     @Throttle(SCAN_INTERVAL)
+
     def get_cppm_data(self):
         """Retrieve data from Aruba Clearpass and return parsed result."""
-        import requests
+        from clearpasspy import ClearPass
         _LOGGER.debug("--------- GET CPPM DATA CALLED------------")
-
-        headers = {
-            'Content-Type': 'application/json',
-            'Authorization': "{}".format(self._api_key)
+        data = {
+            'server': self._cppm_host,
+            'grant_type': self._grant_type,
+            'secret': self._api_key,
+            'client': self._client_id
         }
-        url = 'https://' + self._cppm_host + ':443/api/endpoint?filter=%7B%7D&sort=%2Bid&offset=0&limit=100&calculate_count=false'
-        _LOGGER.debug("------------URL: {} ------------".format(url))
-        r = requests.get(url, headers=headers)
-        json_r = json.loads(r.text)
+        _LOGGER.debug("DATA: {}".format(data))
+
+        CPPM = ClearPass(data)
+        endpoints = CPPM.get_endpoints(100)['_embedded']['items']
         devices = []
-        for item in json_r['_embedded']['items']:
-            url = 'https://' + self._cppm_host + ':443/api/insight/endpoint/mac/' + item['mac_address']
-            r = requests.get(url, headers=headers)
-            json_r = json.loads(r.text)
-            if json_r['is_online'] == True:
+        for item in endpoints:
+            if CPPM.online_status(item['mac_address']) == True:
                 device = {
-                    'ip': json_r['ip'],
-                    'mac': json_r['mac'],
-                    'name': json_r['device_name']
+                    'mac': item['mac_address'],
+                    'name': item['mac_address']
                 }
                 devices.append(device)
             else:

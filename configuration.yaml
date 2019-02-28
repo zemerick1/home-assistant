@@ -69,6 +69,7 @@ logger:
   default: info
   logs:
     homeassistant.components.http: critical
+    custom_components.cppm_tracker.device_tracker: debug
 
 # Enables a map showing the location of tracked devices
 map:
@@ -81,6 +82,10 @@ folder_watcher:
   - folder: /home/homeassistant/.homeassistant
     patterns: 
       - 'backup.last'
+# Switches
+#switch:
+#  - platform: tplink
+#    host: 192.168.2.91
 
 # Sensors
 sensor:
@@ -246,12 +251,25 @@ input_select:
 device_tracker:
   - platform: cppm_tracker
     host: !secret cppm_url
-    password: !secret cppm_token
+    client_id: !secret cppm_client
+    api_key: !secret cppm_token
     scan_interval: 120
     consider_home: 120
     new_device_defaults:
       track_new_devices: false
       hide_if_away: false
+# Google Homes
+googlehome:
+  devices:
+    - host: 192.168.2.89
+    - host: 192.168.2.61
+    - host: 192.168.2.63
+     
+# Weather
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api
+
 # Notify
 notify: !include notify.yaml
 
