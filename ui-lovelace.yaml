@@ -1,6 +1,6 @@
 title: Home
 resources:
-  - url: /local/aarlo-glance.js
+  - url: /local/aarlo-glance.js?v=1
     type: module
   - url: /local/mini-graph-card-bundle.js?v=0.3.0
     type: module
@@ -14,9 +14,24 @@ views:
       - entities:
           - sensor.memory_use_percent
           - sensor.processor_use
+        color_thresholds:
+          - value: 10
+            color: green
+          - value: 30
+            color: "#f39c12"
+          - value: 40
+            color: "#d35400"
+          - value: 50
+            color: "#c0392b"
         name: System Stats
         type: 'custom:mini-graph-card'
         unit: '%'
+        animate: true
+      - entities:
+          - sensor.fast_com_download
+        name: Download
+        type: 'custom:mini-graph-card'
+        unit: 'mbps'
         animate: true
       - entities:
           - device_tracker.amy
@@ -261,6 +276,7 @@ views:
           - entity: light.lr_lamp_1
           - entity: light.lr_lamp_2
           - entity: light.lr_fan_switch
+          - entity: switch.amy_vanity
         show_header_toggle: true
         title: All Lights
         type: entities

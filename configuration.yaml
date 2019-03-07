@@ -69,7 +69,8 @@ logger:
   default: info
   logs:
     homeassistant.components.http: critical
-    custom_components.cppm_tracker.device_tracker: debug
+#    custom_components.cppm_tracker.device_tracker: debug
+#    homeassistant.components.smartthings: debug
 
 # Enables a map showing the location of tracked devices
 map:
@@ -82,10 +83,6 @@ folder_watcher:
   - folder: /home/homeassistant/.homeassistant
     patterns: 
       - 'backup.last'
-# Switches
-#switch:
-#  - platform: tplink
-#    host: 192.168.2.91
 
 # Sensors
 sensor:
@@ -225,6 +222,8 @@ shell_command:
   kill_vivaldi: /home/homeassistant/.homeassistant/scripts/shell_killvivaldi.sh
 
 # Switches
+tplink:
+  discovery: true
 
 # Inputs
 input_boolean:
