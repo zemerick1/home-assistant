@@ -1,16 +1,13 @@
 My home assistant configurations and custom components.
 
 Current version
-```88.0```
+```89.0RC```
 
 # Latest Changes
-* Added ST integration
-* Updated to 88.0
-* Added Person component
-* Added custom component aarlo to fix alarm control panel
-** https://github.com/twrecked/hass-aarlo
-* Added TXT notification via SMTP. (Broke out each 'person' with their own config)
-* Fixed custom scripts.
+* Updated to 89.0RC
+* Updated UI to better display stats.
+* Added new TPLink component added in 89.0
+* Made CPPM Device Tracker HA-compliant. Submitted PR [Here](https://github.com/home-assistant/home-assistant/pull/21673)
 
 
 # TODO
